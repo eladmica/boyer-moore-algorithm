@@ -1,6 +1,6 @@
-public class GoodSuffixRule {
+public final class GoodSuffixRule {
     private final String pattern;
-    public int[] table;
+    private final int[] table;
 
     public GoodSuffixRule(String pattern) {
         if (pattern == null || pattern.length() == 0) {

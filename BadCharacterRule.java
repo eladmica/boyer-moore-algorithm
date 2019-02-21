@@ -1,16 +1,17 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class BadCharacterRule {
+public final class BadCharacterRule {
     private final String pattern;
-    private Map<Character, int[]> table;
+    private final Map<Character, int[]> table;
 
     public BadCharacterRule(String pattern) {
         if (pattern == null || pattern.length() == 0) {
             throw new IllegalArgumentException();
         }
         this.pattern = pattern;
-        this.table = buildTable();
+        this.table = new HashMap<>();
+        buildTable();
     }
 
     // Returns the number of skips by the Bad Character Rule
@@ -29,9 +30,7 @@ public class BadCharacterRule {
         return table.get(c)[index];
     }
 
-    private Map<Character, int[]> buildTable() {
-        Map<Character, int[]> table = new HashMap<>();
-
+    private void buildTable() {
         for (int i=0; i<this.pattern.length(); i++) {
             char curr = this.pattern.charAt(i);
             if (!table.containsKey(curr)) {
@@ -54,7 +53,5 @@ public class BadCharacterRule {
                 }
             }
         }
-
-        return table;
     }
 }
