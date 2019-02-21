@@ -3,6 +3,7 @@ import java.util.Map;
 
 public final class BadCharacterRule {
     private final String pattern;
+    private final int patternLength;
     private final Map<Character, int[]> table;
 
     public BadCharacterRule(String pattern) {
@@ -10,6 +11,7 @@ public final class BadCharacterRule {
             throw new IllegalArgumentException();
         }
         this.pattern = pattern;
+        this.patternLength = pattern.length();
         this.table = new HashMap<>();
         buildTable();
     }
@@ -19,16 +21,16 @@ public final class BadCharacterRule {
     // e.g. ABCD -> D's offset = 0, C's offset = 1, etc.
     // c is the character of the text where the mismatch occurred
     public int getNumSkips(char c, int offset) {
-        if (offset < 0 || offset > this.pattern.length()) {
+        if (offset < 0 || offset > patternLength) {
             throw new IllegalArgumentException();
         }
 
         // Bad Character Rule doesn't apply (all characters matched)
-        if (offset == this.pattern.length()) {
+        if (offset == patternLength) {
             return 0;
         }
 
-        int index = this.pattern.length() - offset - 1;
+        int index = patternLength - offset - 1;
         if (!table.containsKey(c)) {
             return index;
         }
@@ -36,10 +38,10 @@ public final class BadCharacterRule {
     }
 
     private void buildTable() {
-        for (int i=0; i<this.pattern.length(); i++) {
-            char curr = this.pattern.charAt(i);
+        for (int i=0; i<patternLength; i++) {
+            char curr = pattern.charAt(i);
             if (!table.containsKey(curr)) {
-                table.put(curr, new int[this.pattern.length()]);
+                table.put(curr, new int[patternLength]);
             }
             // Mark occurrence
             table.get(curr)[i] = -1;
