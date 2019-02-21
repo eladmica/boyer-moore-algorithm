@@ -19,11 +19,16 @@ public final class BadCharacterRule {
     // e.g. ABCD -> D's offset = 0, C's offset = 1, etc.
     // c is the character of the text where the mismatch occurred
     public int getNumSkips(char c, int offset) {
-        int index = this.pattern.length() - offset - 1;
-        if (index < 0 || offset < 0) {
+        if (offset < 0 || offset > this.pattern.length()) {
             throw new IllegalArgumentException();
         }
 
+        // Bad Character Rule doesn't apply (all characters matched)
+        if (offset == this.pattern.length()) {
+            return 0;
+        }
+
+        int index = this.pattern.length() - offset - 1;
         if (!table.containsKey(c)) {
             return index;
         }

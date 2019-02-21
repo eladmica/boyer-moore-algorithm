@@ -22,6 +22,8 @@ public class BadCharacterRuleTest {
     public void testGetNumSkips() {
         assertEquals(0, ruleSingleChar.getNumSkips('a', 0));
         assertEquals(0, ruleSingleChar.getNumSkips('b', 0));
+        assertEquals(0, ruleSingleChar.getNumSkips('a', 1));
+        assertEquals(0, ruleSingleChar.getNumSkips('b', 1));
 
         assertEquals(0, ruleRepeatedChars.getNumSkips('a', 0));
         assertEquals(0, ruleRepeatedChars.getNumSkips('a', 1));
@@ -41,17 +43,18 @@ public class BadCharacterRuleTest {
         assertEquals(8, rule.getNumSkips('z', 2));
         assertEquals(1, rule.getNumSkips('z', 9));
         assertEquals(0, rule.getNumSkips('z', 10));
+        assertEquals(0, rule.getNumSkips('z', 11));
     }
 
     @Test
     public void testGetNumSkipsIllegalArgumentException() {
         runNumSkipsException(ruleSingleChar, 'a', -1);
         runNumSkipsException(ruleSingleChar, 'b', -1);
-        runNumSkipsException(ruleSingleChar, 'a', 1);
-        runNumSkipsException(ruleSingleChar, 'b', 1);
+        runNumSkipsException(ruleSingleChar, 'a', 2);
+        runNumSkipsException(ruleSingleChar, 'b', 2);
 
         runNumSkipsException(rule, 'c', -2);
-        runNumSkipsException(rule, 'c', 11);
+        runNumSkipsException(rule, 'c', 12);
     }
 
     // Helper method for testing getNumSkips() when expecting an exception to be thrown
