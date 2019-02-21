@@ -42,7 +42,7 @@ public final class GoodSuffixRule {
         while (i > 0) {
             while (j <= len && this.pattern.charAt(i-1) != this.pattern.charAt(j-1)) {
                 if (table[j] == 0) {
-                    table[j] = j - i - 1; // decrement 1 because we want # of skips, not # of shifts
+                    table[j] = j - i;
                 }
                 j = tmp[j];
             }
@@ -54,11 +54,15 @@ public final class GoodSuffixRule {
         j = tmp[0];
         for (i=0; i<=len; i++) {
             if (table[i] == 0) {
-                table[i] = j - 1; // decrement 1 because we want # of skips, not # of shifts
+                table[i] = j;
             }
             if (i == j) {
                 j = tmp[j];
             }
+        }
+
+        for (i=0; i<table.length; i++) {
+            table[i]--;
         }
     }
 }

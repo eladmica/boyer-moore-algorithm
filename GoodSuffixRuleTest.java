@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GoodSuffixRuleTest {
-    private GoodSuffixRule rule;
-    private GoodSuffixRule rule2;
+    private GoodSuffixRule rule, rule2, rule3;
     private GoodSuffixRule ruleSingleChar;
     private GoodSuffixRule ruleRepeatedChars;
 
@@ -13,6 +12,7 @@ public class GoodSuffixRuleTest {
     private void setUp() {
         this.rule = new GoodSuffixRule("abbcabbca");
         this.rule2 = new GoodSuffixRule("abaacaac");
+        this.rule3 = new GoodSuffixRule("abbcc");
         this.ruleSingleChar = new GoodSuffixRule("a");
         this.ruleRepeatedChars = new GoodSuffixRule("aaa");
     }
@@ -35,6 +35,13 @@ public class GoodSuffixRuleTest {
         assertEquals(2, rule2.getNumSkips(3));
         assertEquals(7, rule2.getNumSkips(4));
         assertEquals(7, rule2.getNumSkips(8));
+
+        assertEquals(0, rule3.getNumSkips(0));
+        assertEquals(0, rule3.getNumSkips(1));
+        assertEquals(4, rule3.getNumSkips(2));
+        assertEquals(4, rule3.getNumSkips(3));
+        assertEquals(4, rule3.getNumSkips(4));
+        assertEquals(4, rule3.getNumSkips(5));
 
         assertEquals(0, ruleSingleChar.getNumSkips(0));
         assertEquals(0, ruleSingleChar.getNumSkips(1));
