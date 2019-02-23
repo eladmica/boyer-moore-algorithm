@@ -14,6 +14,8 @@ public final class GoodSuffixRule {
     }
 
     // Returns the number of skips by the Good Suffix Rule
+    // offset is the number of characters to the left of the last index of the pattern
+    // e.g. ABCD -> D's offset = 0, C's offset = 1, etc.
     // offset should be on the mismatched character
     public int getNumSkips(int offset) {
         if (offset < 0 || offset > patternLength) {
@@ -31,6 +33,7 @@ public final class GoodSuffixRule {
     }
 
 
+    // Pre-processing for the Good Suffix Rule
     // Reference: http://www.iti.fh-flensburg.de/lang/algorithmen/pattern/bmen.htm
     private void buildTable() {
         int[] tmp = new int[patternLength+1];

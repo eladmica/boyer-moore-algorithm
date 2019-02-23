@@ -17,7 +17,7 @@ public final class BadCharacterRule {
     }
 
     // Returns the number of skips by the Bad Character Rule
-    // offset is the number of characters away the end of pattern
+    // offset is the number of characters to the left of the last index of the pattern
     // e.g. ABCD -> D's offset = 0, C's offset = 1, etc.
     // c is the character of the text where the mismatch occurred
     public int getNumSkips(char c, int offset) {
@@ -37,6 +37,7 @@ public final class BadCharacterRule {
         return table.get(c)[index];
     }
 
+    // Pre-processing for the Bad Character Rule
     private void buildTable() {
         for (int i=0; i<patternLength; i++) {
             char curr = pattern.charAt(i);

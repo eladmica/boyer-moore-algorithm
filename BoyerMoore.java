@@ -14,7 +14,7 @@ public final class BoyerMoore {
         this.goodSuffixRule = new GoodSuffixRule(pattern);
     }
 
-    // Returns the number of times this pattern matches against the text
+    // Returns the number of times this.pattern matches against the text
     public int run(String text) {
         if (text == null) {
             throw new IllegalArgumentException();
@@ -23,10 +23,6 @@ public final class BoyerMoore {
         final int textLength = text.length();
         if (textLength == 0 || text.length() < patternLength) {
             return 0;
-        }
-
-        if (textLength == patternLength) {
-            return pattern.equals(text) ? 1 : 0;
         }
 
         int matches = 0;
@@ -40,9 +36,8 @@ public final class BoyerMoore {
                     int goodSuffixRuleSkips = goodSuffixRule.getNumSkips(offset);
                     index += Math.max(badCharacterRuleSkips, goodSuffixRuleSkips);
                     break;
-                } else {
-                    offset++;
                 }
+                offset++;
             }
 
             if (offset == patternLength) {
